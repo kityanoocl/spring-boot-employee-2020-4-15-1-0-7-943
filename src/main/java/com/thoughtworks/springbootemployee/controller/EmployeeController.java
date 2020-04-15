@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.Integer.max;
+import static java.lang.Integer.min;
+
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -17,6 +20,16 @@ public class EmployeeController {
     @GetMapping
     public List<Employee> getAllEmployee() {
         return employees;
+    }
+
+    @GetMapping(params = "page")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<Employee> getEmployeesInPage(@RequestParam Integer page, @RequestParam Integer pageSize) {
+        int employeeSize = employees.size();
+        int startIndex = min(employeeSize, (page - 1) * pageSize);
+        int endIndex = max(1, page * pageSize);
+        endIndex = min(endIndex, employeeSize);
+        return employees.subList(startIndex, endIndex);
     }
 
     @GetMapping("/{employeeId}")
