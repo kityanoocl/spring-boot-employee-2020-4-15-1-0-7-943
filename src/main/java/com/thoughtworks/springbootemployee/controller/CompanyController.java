@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.Integer.max;
+import static java.lang.Integer.min;
+
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
@@ -18,6 +21,16 @@ public class CompanyController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Company> getCompanies() {
         return companies;
+    }
+
+    @GetMapping(params = "page")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<Company> getCompaniesInPage(@RequestParam Integer page, @RequestParam Integer pageSize) {
+        int companySize = companies.size();
+        int startIndex = min(companySize, (page - 1) * pageSize);
+        int endIndex = max(1, page * pageSize);
+        endIndex = min(endIndex, companySize);
+        return companies.subList(startIndex, endIndex);
     }
 
     @GetMapping("/{companyName}")
@@ -49,7 +62,7 @@ public class CompanyController {
     }
 
     @PutMapping("/{companyName}")
-    @ResponseStatus
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Company updateCompanyBasicInfo (@PathVariable String companyName, @RequestBody Company newCompanyInfo) {
         Company company = companies.stream().filter(companyInList -> companyInList.getName().equals(companyName)).findFirst().orElse(null);
         if (company == null) {
@@ -64,7 +77,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{companyName}")
-    @ResponseStatus
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Company deleteCompanyEmployees (@PathVariable String companyName) {
         Company company = companies.stream().filter(companyInList -> companyInList.getName().equals(companyName)).findFirst().orElse(null);
         if (company == null) {
