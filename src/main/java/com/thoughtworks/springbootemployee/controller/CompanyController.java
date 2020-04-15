@@ -47,4 +47,19 @@ public class CompanyController {
         companies.add(company);
         return company;
     }
+
+    @PutMapping("/{companyName}")
+    @ResponseStatus
+    public Company updateCompanyBasicInfo (@PathVariable String companyName, @RequestBody Company newCompanyInfo) {
+        Company company = companies.stream().filter(companyInList -> companyInList.getName().equals(companyName)).findFirst().orElse(null);
+        if (company == null) {
+            return null;
+        }
+
+        company.setName(newCompanyInfo.getName());
+        company.setEmployeesNumber(newCompanyInfo.getEmployeesNumber());
+        company.setEmployees(newCompanyInfo.getEmployees());
+
+        return company;
+    }
 }
