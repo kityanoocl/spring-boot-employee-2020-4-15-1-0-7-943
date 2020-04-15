@@ -22,8 +22,8 @@ public class CompanyController {
 
     @GetMapping("/{companyName}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Company getCompany(@RequestParam String name) {
-        return companies.stream().filter(company -> company.getName().equals(name)).findFirst().orElse(null);
+    public Company getCompany(@PathVariable String companyName) {
+        return companies.stream().filter(company -> company.getName().equals(companyName)).findFirst().orElse(null);
     }
 
     @PostMapping
