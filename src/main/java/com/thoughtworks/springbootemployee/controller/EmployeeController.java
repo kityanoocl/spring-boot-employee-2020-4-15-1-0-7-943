@@ -56,7 +56,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{employeeId}")
-    @ResponseStatus
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Employee updateCompanyBasicInfo (@PathVariable Integer employeeId, @RequestBody Employee newEmployeeInfo) {
         Employee employee = employees.stream().filter(companyInList -> companyInList.getId() == employeeId).findFirst().orElse(null);
         if (employee == null) {
@@ -72,7 +72,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{employeeId}")
-    @ResponseStatus
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Employee> deleteCompanyEmployees (@PathVariable Integer employeeId) {
         employees = employees.stream().filter(companyInList -> !companyInList.getName().equals(employeeId)).collect(Collectors.toList());
         return employees;
