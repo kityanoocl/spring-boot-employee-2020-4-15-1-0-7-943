@@ -26,6 +26,17 @@ public class CompanyController {
         return companies.stream().filter(company -> company.getName().equals(companyName)).findFirst().orElse(null);
     }
 
+    @GetMapping("/{companyName}/employees")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<Employee> getCompanyEmployees(@PathVariable String companyName) {
+        Company company = companies.stream().filter(companyInList -> companyInList.getName().equals(companyName)).findFirst().orElse(null);
+        if (company == null) {
+            return null;
+        }
+
+        return company.getEmployees();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Company addCompany(@RequestBody Company company) {
