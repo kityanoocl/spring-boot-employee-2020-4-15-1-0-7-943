@@ -62,4 +62,17 @@ public class CompanyController {
 
         return company;
     }
+
+    @DeleteMapping("/{companyName}")
+    @ResponseStatus
+    public Company deleteCompanyEmployees (@PathVariable String companyName) {
+        Company company = companies.stream().filter(companyInList -> companyInList.getName().equals(companyName)).findFirst().orElse(null);
+        if (company == null) {
+            return null;
+        }
+
+        company.setEmployees(new ArrayList<Employee>());
+
+        return company;
+    }
 }
