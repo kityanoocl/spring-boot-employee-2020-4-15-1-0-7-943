@@ -22,6 +22,12 @@ public class EmployeeController {
         return employees;
     }
 
+    @GetMapping(params = "gender")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<Employee> getEmployeesInSameGender(@RequestParam String gender) {
+        return employees.stream().filter(employee -> employee.getGender().toLowerCase().equals(gender)).collect(Collectors.toList());
+    }
+
     @GetMapping(params = "page")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Employee> getEmployeesInPage(@RequestParam Integer page, @RequestParam Integer pageSize) {
