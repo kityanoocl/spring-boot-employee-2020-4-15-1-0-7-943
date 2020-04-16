@@ -42,7 +42,7 @@ public class EmployeeController {
     @GetMapping("/{employeeId}")
     @ResponseStatus(HttpStatus.OK)
     public Employee getEmployee(@PathVariable Integer employeeId) {
-        return employees.stream().filter(employee -> employee.getId() == employeeId).findFirst().orElse(null);
+        return employeeService.getEmployeesById(employeeId);
     }
 
     @PostMapping
