@@ -42,8 +42,8 @@ public class EmployeeService {
             employee.setName(newEmployeeInfo.getName());
             employee.setAge(newEmployeeInfo.getAge());
             employee.setGender(newEmployeeInfo.getGender());
-            employeeRepository.updateEmployee(employee);
         }
+
         return employeeRepository.getEmployees();
     }
 
