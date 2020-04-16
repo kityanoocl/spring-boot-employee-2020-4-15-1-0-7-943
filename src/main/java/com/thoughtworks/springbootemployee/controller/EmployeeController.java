@@ -48,12 +48,7 @@ public class EmployeeController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Employee> addEmployee(@RequestBody Employee employee) {
-        if (employees.stream().anyMatch(employeeInList -> employeeInList.getId() == employee.getId())) {
-            return null;
-        }
-
-        employees.add(employee);
-        return employees;
+        return employeeService.addEmployee(employee);
     }
 
     @PutMapping("/{employeeId}")

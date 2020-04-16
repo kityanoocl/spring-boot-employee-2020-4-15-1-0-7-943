@@ -23,4 +23,12 @@ public class EmployeeService {
     public Employee getEmployeesById(Integer employeeId) {
         return employeeRepository.getEmployees().stream().filter(employee -> employee.getId() == employeeId).findFirst().orElse(null);
     }
+
+    public List<Employee> addEmployee(Employee employee) {
+        if (getEmployeesById(employee.getId()) == null) {
+            employeeRepository.add(employee);
+        }
+
+        return employeeRepository.getEmployees();
+    }
 }
