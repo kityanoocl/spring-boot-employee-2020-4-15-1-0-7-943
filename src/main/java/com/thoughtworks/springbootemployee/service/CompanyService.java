@@ -27,4 +27,8 @@ public class CompanyService {
         endIndex = min(endIndex, companySize);
         return companies.subList(startIndex, endIndex);
     }
+
+    public Company getCompanyByCompanyName(String companyName) {
+        return getCompanies().stream().filter(company -> company.getName().equals(companyName)).findFirst().orElse(null);
+    }
 }

@@ -34,8 +34,8 @@ public class CompanyController {
 
     @GetMapping("/{companyName}")
     @ResponseStatus(HttpStatus.OK)
-    public Company getCompany(@PathVariable String companyName) {
-        return companies.stream().filter(company -> company.getName().equals(companyName)).findFirst().orElse(null);
+    public Company getCompanyByCompanyName(@PathVariable String companyName) {
+        return companyService.getCompanyByCompanyName(companyName);
     }
 
     @GetMapping("/{companyName}/employees")
