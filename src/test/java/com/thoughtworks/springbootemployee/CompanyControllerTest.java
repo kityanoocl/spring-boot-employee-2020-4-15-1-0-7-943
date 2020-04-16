@@ -59,16 +59,16 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void shouldFindEmployeeById() {
+    public void shouldFindCompanyByName() {
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
-                .get("/employees/1");
+                .get("/companies/abc");
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        Employee employee = response.getBody().as(Employee.class);
-        Assert.assertEquals(1, employee.getId());
-        Assert.assertEquals("Test 1", employee.getName());
+        Company company = response.getBody().as(Company.class);
+        Assert.assertEquals("abc", company.getName());
+        Assert.assertEquals(10, company.getEmployeesNumber());
     }
 
     @Test
