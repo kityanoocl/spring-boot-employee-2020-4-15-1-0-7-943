@@ -47,12 +47,7 @@ public class CompanyController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Company> addCompany(@RequestBody Company company) {
-        if (companies.stream().anyMatch(companyInList -> companyInList.getName().equals(company.getName()))) {
-            return null;
-        }
-
-        companies.add(company);
-        return companies;
+        return companyService.addCompany(company);
     }
 
     @PutMapping("/{companyName}")

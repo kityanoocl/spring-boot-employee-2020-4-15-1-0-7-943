@@ -41,4 +41,12 @@ public class CompanyService {
 
         return company.getEmployees();
     }
+
+    public List<Company> addCompany(Company company) {
+        if (getCompanyByCompanyName(company.getName()) == null) {
+            companyRepository.add(company);
+        }
+
+        return getCompanies();
+    }
 }
