@@ -127,4 +127,25 @@ public class EmployeeControllerTest {
         Assert.assertEquals(18, employees.get(0).getAge());
         Assert.assertEquals("Female", employees.get(0).getGender());
     }
+    @Test
+    public void shouldDisplayEmployeeInPage() {
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .params("page", 2, "pageSize", 1)
+                .when()
+                .get("/employees");
+
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        List<Employee> employees = response.getBody().as(new TypeRef<List<Employee>>() {
+            @Override
+            public Type getType() {
+                return super.getType();
+            }
+        });
+        Assert.assertEquals(1, employees.size());
+        Assert.assertEquals(2, employees.get(0).getId());
+        Assert.assertEquals("Test 2", employees.get(0).getName());
+        Assert.assertEquals(18, employees.get(0).getAge());
+        Assert.assertEquals("Female", employees.get(0).getGender());
+    }
 }
