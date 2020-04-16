@@ -13,8 +13,8 @@ import static java.lang.Integer.min;
 public class CompanyService {
     private final CompanyRepository companyRepository = new CompanyRepository();
 
-    public CompanyService() {}
-
+    public CompanyService() {
+    }
 
     public List<Company> getCompanies() {
         return companyRepository.getCompanies();

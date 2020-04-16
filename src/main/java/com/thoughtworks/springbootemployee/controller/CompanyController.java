@@ -17,8 +17,7 @@ import static java.lang.Integer.min;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-    private CompanyService companyService = new CompanyService();
-    private List<Company> companies = CompanyFactory.getCompanies();
+    private final CompanyService companyService = new CompanyService();
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -52,13 +51,13 @@ public class CompanyController {
 
     @PutMapping("/{companyName}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Company> updateCompanyBasicInfo (@PathVariable String companyName, @RequestBody Company newCompanyInfo) {
+    public List<Company> updateCompanyBasicInfo(@PathVariable String companyName, @RequestBody Company newCompanyInfo) {
         return companyService.updateCompanyBasicInfo(companyName, newCompanyInfo);
     }
 
     @DeleteMapping("/{companyName}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Company> deleteCompanyEmployees (@PathVariable String companyName) {
+    public List<Company> deleteCompanyEmployees(@PathVariable String companyName) {
         return companyService.deleteCompanyEmployees(companyName);
     }
 }

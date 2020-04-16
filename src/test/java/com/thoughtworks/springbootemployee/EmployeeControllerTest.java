@@ -28,12 +28,9 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 @SpringBootTest
 public class EmployeeControllerTest {
 
-    @Autowired
-    private EmployeeController employeeController;
-
     @Before
     public void initialization() throws Exception {
-        RestAssuredMockMvc.standaloneSetup(employeeController);
+        RestAssuredMockMvc.standaloneSetup(new EmployeeController());
     }
 
     @Test

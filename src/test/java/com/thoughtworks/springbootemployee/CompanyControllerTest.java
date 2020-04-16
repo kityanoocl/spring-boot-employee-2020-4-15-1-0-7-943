@@ -26,12 +26,9 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 @SpringBootTest
 public class CompanyControllerTest {
 
-    @Autowired
-    private CompanyController companyController;
-
     @Before
     public void initialization() throws Exception {
-        RestAssuredMockMvc.standaloneSetup(companyController);
+        RestAssuredMockMvc.standaloneSetup(new CompanyController());
     }
 
     @Test
@@ -43,11 +40,11 @@ public class CompanyControllerTest {
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
         List<Company> companies = response.getBody().as(new TypeRef<List<Company>>() {
-                                                            @Override
-                                                            public Type getType() {
-                                                                return super.getType();
-                                                            }
-                                                        });
+            @Override
+            public Type getType() {
+                return super.getType();
+            }
+        });
 
         Assert.assertEquals(2, companies.size());
         Assert.assertEquals("abc", companies.get(0).getName());
@@ -72,7 +69,7 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void shouldFindCompanyByNameAndGetEmployees () {
+    public void shouldFindCompanyByNameAndGetEmployees() {
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
                 .get("/companies/abc/employees");

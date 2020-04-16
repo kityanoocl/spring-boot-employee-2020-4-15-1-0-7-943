@@ -13,7 +13,9 @@ import static java.lang.Integer.min;
 @Service
 public class EmployeeService {
     private EmployeeRepository employeeRepository = new EmployeeRepository();
-    public EmployeeService() {}
+
+    public EmployeeService() {
+    }
 
     public List<Employee> getEmployees() {
         return employeeRepository.getEmployees();
