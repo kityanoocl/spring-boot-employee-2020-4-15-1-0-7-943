@@ -49,4 +49,15 @@ public class CompanyService {
 
         return getCompanies();
     }
+
+    public List<Company> updateCompanyBasicInfo(String companyName, Company newCompanyInfo) {
+        Company company = getCompanyByCompanyName(companyName);
+        if (company != null) {
+            company.setName(newCompanyInfo.getName());
+            company.setEmployeesNumber(newCompanyInfo.getEmployeesNumber());
+            company.setEmployees(newCompanyInfo.getEmployees());
+        }
+
+        return getCompanies();
+    }
 }
