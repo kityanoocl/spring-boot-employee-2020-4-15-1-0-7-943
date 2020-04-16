@@ -156,24 +156,22 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void shouldDisplayEmployeeInPage() {
+    public void shouldDisplayCompanyInPage() {
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .params("page", 2, "pageSize", 1)
                 .when()
-                .get("/employees");
+                .get("/companies");
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        List<Employee> employees = response.getBody().as(new TypeRef<List<Employee>>() {
+        List<Company> companies = response.getBody().as(new TypeRef<List<Company>>() {
             @Override
             public Type getType() {
                 return super.getType();
             }
         });
-        Assert.assertEquals(1, employees.size());
-        Assert.assertEquals(2, employees.get(0).getId());
-        Assert.assertEquals("Test 2", employees.get(0).getName());
-        Assert.assertEquals(18, employees.get(0).getAge());
-        Assert.assertEquals("Female", employees.get(0).getGender());
+        Assert.assertEquals(1, companies.size());
+        Assert.assertEquals("def", companies.get(0).getName());
+        Assert.assertEquals(30, companies.get(0).getEmployeesNumber());
     }
 }
