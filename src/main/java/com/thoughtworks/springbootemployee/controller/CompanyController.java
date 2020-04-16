@@ -65,7 +65,7 @@ public class CompanyController {
 
     @PutMapping("/{companyName}")
     @ResponseStatus(HttpStatus.OK)
-    public Company updateCompanyBasicInfo (@PathVariable String companyName, @RequestBody Company newCompanyInfo) {
+    public List<Company> updateCompanyBasicInfo (@PathVariable String companyName, @RequestBody Company newCompanyInfo) {
         Company company = companies.stream().filter(companyInList -> companyInList.getName().equals(companyName)).findFirst().orElse(null);
         if (company == null) {
             return null;
@@ -75,7 +75,7 @@ public class CompanyController {
         company.setEmployeesNumber(newCompanyInfo.getEmployeesNumber());
         company.setEmployees(newCompanyInfo.getEmployees());
 
-        return company;
+        return companies;
     }
 
     @DeleteMapping("/{companyName}")
