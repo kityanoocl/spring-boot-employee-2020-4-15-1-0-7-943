@@ -9,10 +9,14 @@ import io.restassured.module.mockmvc.response.MockMvcResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.spec.internal.HttpStatus;
+import org.springframework.test.context.event.annotation.BeforeTestExecution;
+import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Type;
@@ -28,8 +32,33 @@ public class EmployeeControllerTest {
     private EmployeeController employeeController;
 
     @Before
-    public void setUp() throws Exception {
+    public void initialization() throws Exception {
         RestAssuredMockMvc.standaloneSetup(employeeController);
+    }
+
+    @Test
+    public void shouldGetAllEmployees() {
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .when()
+                .get("/employees");
+
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        List<Employee> employees = response.getBody().as(new TypeRef<List<Employee>>() {
+            @Override
+            public Type getType() {
+                return super.getType();
+            }
+        });
+        Assert.assertEquals(2, employees.size());
+        Assert.assertEquals(1, employees.get(0).getId());
+        Assert.assertEquals("Test 1", employees.get(0).getName());
+        Assert.assertEquals(20, employees.get(0).getAge());
+        Assert.assertEquals("Male", employees.get(0).getGender());
+        Assert.assertEquals(2, employees.get(1).getId());
+        Assert.assertEquals("Test 2", employees.get(1).getName());
+        Assert.assertEquals(18, employees.get(1).getAge());
+        Assert.assertEquals("Female", employees.get(1).getGender());
     }
 
     @Test
@@ -127,6 +156,7 @@ public class EmployeeControllerTest {
         Assert.assertEquals(18, employees.get(0).getAge());
         Assert.assertEquals("Female", employees.get(0).getGender());
     }
+
     @Test
     public void shouldDisplayEmployeeInPage() {
         MockMvcResponse response = given().contentType(ContentType.JSON)
