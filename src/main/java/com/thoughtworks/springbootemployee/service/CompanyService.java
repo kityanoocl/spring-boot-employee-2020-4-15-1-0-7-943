@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 
 import java.util.List;
@@ -30,5 +31,14 @@ public class CompanyService {
 
     public Company getCompanyByCompanyName(String companyName) {
         return getCompanies().stream().filter(company -> company.getName().equals(companyName)).findFirst().orElse(null);
+    }
+
+    public List<Employee> getCompanyEmployees(String companyName) {
+        Company company = getCompanyByCompanyName(companyName);
+        if (company == null) {
+            return null;
+        }
+
+        return company.getEmployees();
     }
 }

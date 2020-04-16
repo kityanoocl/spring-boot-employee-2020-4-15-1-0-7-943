@@ -41,12 +41,7 @@ public class CompanyController {
     @GetMapping("/{companyName}/employees")
     @ResponseStatus(HttpStatus.OK)
     public List<Employee> getCompanyEmployees(@PathVariable String companyName) {
-        Company company = companies.stream().filter(companyInList -> companyInList.getName().equals(companyName)).findFirst().orElse(null);
-        if (company == null) {
-            return null;
-        }
-
-        return company.getEmployees();
+        return companyService.getCompanyEmployees(companyName);
     }
 
     @PostMapping
