@@ -43,4 +43,10 @@ public class EmployeeService {
         }
         return employeeRepository.getEmployees();
     }
+
+    public List<Employee> deleteEmployee(Integer employeeId) {
+        Employee employee = getEmployeesById(employeeId);
+        employeeRepository.deleteEmployee(employee);
+        return employeeRepository.getEmployees();
+    }
 }

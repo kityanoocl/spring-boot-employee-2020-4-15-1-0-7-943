@@ -29,4 +29,8 @@ public class EmployeeRepository {
         employees.add(employee);
         employees.sort(Comparator.comparingInt(Employee::getId));
     }
+
+    public void deleteEmployee(Employee employee) {
+        employees.remove(employee);
+    }
 }

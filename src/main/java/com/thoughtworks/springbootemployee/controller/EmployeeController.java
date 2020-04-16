@@ -59,8 +59,7 @@ public class EmployeeController {
 
     @DeleteMapping("/{employeeId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> deleteCompanyEmployees(@PathVariable Integer employeeId) {
-        employees = employees.stream().filter(companyInList -> companyInList.getId() != employeeId).collect(Collectors.toList());
-        return employees;
+    public List<Employee> deleteEmployee(@PathVariable Integer employeeId) {
+        return employeeService.deleteEmployee(employeeId);
     }
 }
