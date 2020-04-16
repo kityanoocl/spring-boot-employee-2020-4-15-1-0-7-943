@@ -1,12 +1,11 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.model.EmployeeFactory;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,10 +16,10 @@ import static java.lang.Integer.min;
 @RequestMapping("/employees")
 public class EmployeeController {
     private List<Employee> employees = EmployeeFactory.getEmployees();
-
+    private final EmployeeService employeeService = new EmployeeService();
     @GetMapping
     public List<Employee> getAllEmployee() {
-        return employees;
+        return employeeService.getEmployees();
     }
 
     @GetMapping(params = "gender")
