@@ -72,11 +72,10 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void shouldFindEmployeeByGendar() {
+    public void shouldFindCompanyByNameAndGetEmployees () {
         MockMvcResponse response = given().contentType(ContentType.JSON)
-                .params("gender", "male")
                 .when()
-                .get("/employees");
+                .get("/companies/abc/employees");
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
@@ -86,8 +85,9 @@ public class CompanyControllerTest {
                 return super.getType();
             }
         });
-        Assert.assertEquals(1, employees.size());
+        Assert.assertEquals(2, employees.size());
         Assert.assertEquals("Test 1", employees.get(0).getName());
+        Assert.assertEquals("Test 2", employees.get(1).getName());
     }
 
     @Test
