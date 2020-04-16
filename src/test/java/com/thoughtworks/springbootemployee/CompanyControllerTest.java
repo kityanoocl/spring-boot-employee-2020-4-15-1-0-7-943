@@ -91,24 +91,26 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void shouldAddEmployee() {
-        Employee employee = new Employee(3, "XX", 84, "Male");
+    public void shouldAddCompany() {
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(3, "XX", 84, "Male"));
+        Company company = new Company("ghi", 40, employees);
         MockMvcResponse response = given().contentType(ContentType.JSON)
-                .body(employee)
+                .body(company)
                 .when()
-                .post("/employees");
+                .post("/companies");
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        List<Employee> employees = response.getBody().as(new TypeRef<List<Employee>>() {
+        List<Company> companies = response.getBody().as(new TypeRef<List<Company>>() {
             @Override
             public Type getType() {
                 return super.getType();
             }
         });
-        Assert.assertEquals(3, employees.size());
-        Assert.assertEquals("Test 1", employees.get(0).getName());
-        Assert.assertEquals("XX", employees.get(2).getName());
+        Assert.assertEquals(3, companies.size());
+        Assert.assertEquals("abc", companies.get(0).getName());
+        Assert.assertEquals("ghi", companies.get(2).getName());
     }
 
     @Test
