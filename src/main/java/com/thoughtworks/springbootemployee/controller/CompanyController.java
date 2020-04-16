@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.CompanyFactory;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +16,16 @@ import static java.lang.Integer.min;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-    private List<Company> companies = new ArrayList<>();
+    private List<Company> companies = CompanyFactory.getCompanies();
 
     @GetMapping
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public List<Company> getCompanies() {
         return companies;
     }
 
     @GetMapping(params = "page")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public List<Company> getCompaniesInPage(@RequestParam Integer page, @RequestParam Integer pageSize) {
         int companySize = companies.size();
         int startIndex = min(companySize, (page - 1) * pageSize);
@@ -35,13 +36,13 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyName}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public Company getCompany(@PathVariable String companyName) {
         return companies.stream().filter(company -> company.getName().equals(companyName)).findFirst().orElse(null);
     }
 
     @GetMapping("/{companyName}/employees")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public List<Employee> getCompanyEmployees(@PathVariable String companyName) {
         Company company = companies.stream().filter(companyInList -> companyInList.getName().equals(companyName)).findFirst().orElse(null);
         if (company == null) {
@@ -63,7 +64,7 @@ public class CompanyController {
     }
 
     @PutMapping("/{companyName}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public Company updateCompanyBasicInfo (@PathVariable String companyName, @RequestBody Company newCompanyInfo) {
         Company company = companies.stream().filter(companyInList -> companyInList.getName().equals(companyName)).findFirst().orElse(null);
         if (company == null) {
@@ -78,7 +79,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{companyName}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public Company deleteCompanyEmployees (@PathVariable String companyName) {
         Company company = companies.stream().filter(companyInList -> companyInList.getName().equals(companyName)).findFirst().orElse(null);
         if (company == null) {

@@ -8,6 +8,14 @@ public class Company {
     private int employeesNumber;
     private List<Employee> employees = new ArrayList<>();
 
+    public Company() {}
+
+    public Company (String name, int employeesNumber, List<Employee> employees) {
+        this.name = name;
+        this.employeesNumber = employeesNumber;
+        this.employees = employees;
+    }
+
     public String getName() {
         return name;
     }
