@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.CompanyFactory;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +17,13 @@ import static java.lang.Integer.min;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
+    private CompanyService companyService = new CompanyService();
     private List<Company> companies = CompanyFactory.getCompanies();
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Company> getCompanies() {
-        return companies;
+        return companyService.getCompanies();
     }
 
     @GetMapping(params = "page")
