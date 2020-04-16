@@ -75,7 +75,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    public void shouldFindEmployeeByGendar() {
+    public void shouldFindEmployeeByGender() {
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .params("gender", "male")
                 .when()
