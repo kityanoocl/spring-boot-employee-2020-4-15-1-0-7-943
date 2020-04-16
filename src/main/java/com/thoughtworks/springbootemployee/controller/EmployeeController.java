@@ -15,7 +15,7 @@ import static java.lang.Integer.min;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-    private List<Employee> employees = EmployeeFactory.getEmployees();
+
     private final EmployeeService employeeService = new EmployeeService();
     @GetMapping
     public List<Employee> getAllEmployee() {
@@ -31,12 +31,7 @@ public class EmployeeController {
     @GetMapping(params = {"page", "pageSize"})
     @ResponseStatus(HttpStatus.OK)
     public List<Employee> getEmployeesInPage(@RequestParam Integer page, @RequestParam Integer pageSize) {
-        int employeeSize = employees.size();
-        int startIndex = min(employeeSize, (page - 1) * pageSize);
-        startIndex = max(0, startIndex);
-        int endIndex = max(1, page * pageSize);
-        endIndex = min(endIndex, employeeSize);
-        return employees.subList(startIndex, endIndex);
+        return employeeService.getEmployeesInPage(page, pageSize);
     }
 
     @GetMapping("/{employeeId}")

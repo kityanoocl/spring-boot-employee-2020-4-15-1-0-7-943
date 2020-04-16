@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.Integer.max;
+import static java.lang.Integer.min;
+
 @Service
 public class EmployeeService {
     private EmployeeRepository employeeRepository = new EmployeeRepository();
@@ -48,5 +51,15 @@ public class EmployeeService {
         Employee employee = getEmployeesById(employeeId);
         employeeRepository.deleteEmployee(employee);
         return employeeRepository.getEmployees();
+    }
+
+    public List<Employee> getEmployeesInPage(Integer page, Integer pageSize) {
+        List<Employee> employees = getEmployees();
+        int employeeSize = employees.size();
+        int startIndex = min(employeeSize, (page - 1) * pageSize);
+        startIndex = max(0, startIndex);
+        int endIndex = max(1, page * pageSize);
+        endIndex = min(endIndex, employeeSize);
+        return employees.subList(startIndex, endIndex);
     }
 }
