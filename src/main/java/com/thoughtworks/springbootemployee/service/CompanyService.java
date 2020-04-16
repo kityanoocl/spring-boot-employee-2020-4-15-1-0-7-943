@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,10 +14,9 @@ import static java.lang.Integer.min;
 
 @Service
 public class CompanyService {
-    private final CompanyRepository companyRepository = new CompanyRepository();
+    @Autowired
+    CompanyRepository companyRepository;
 
-    public CompanyService() {
-    }
 
     public List<Company> getCompanies() {
         return companyRepository.getCompanies();

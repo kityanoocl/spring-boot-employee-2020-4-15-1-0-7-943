@@ -3,6 +3,8 @@ package com.thoughtworks.springbootemployee;
 import com.thoughtworks.springbootemployee.controller.CompanyController;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.service.CompanyService;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.TypeRef;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -10,10 +12,12 @@ import io.restassured.module.mockmvc.response.MockMvcResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.spec.internal.HttpStatus;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Type;
@@ -24,11 +28,20 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ComponentScan("com.thoughtworks.springbootemployee.service")
+@ComponentScan("com.thoughtworks.springbootemployee.Repository")
 public class CompanyControllerTest {
+    @Autowired
+    CompanyService companyService;
+    @Autowired
+    CompanyRepository companyRepository;
+    @Autowired
+    CompanyController companyController;
 
     @Before
     public void initialization() throws Exception {
-        RestAssuredMockMvc.standaloneSetup(new CompanyController());
+        RestAssuredMockMvc.standaloneSetup(companyController);
+        companyRepository.resetCompanies();
     }
 
     @Test

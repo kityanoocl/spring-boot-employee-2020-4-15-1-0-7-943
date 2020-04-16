@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.CompanyFactory;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,8 @@ import static java.lang.Integer.min;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-    private final CompanyService companyService = new CompanyService();
+    @Autowired
+    CompanyService companyService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

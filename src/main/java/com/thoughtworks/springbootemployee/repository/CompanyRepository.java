@@ -9,11 +9,7 @@ import java.util.List;
 
 @Repository
 public class CompanyRepository {
-    private List<Company> companies = new ArrayList<>();
-
-    public CompanyRepository() {
-        companies = CompanyFactory.getCompanies();
-    }
+    private List<Company> companies = CompanyFactory.getCompanies();
 
     public List<Company> getCompanies() {
         return companies;
@@ -21,5 +17,9 @@ public class CompanyRepository {
 
     public void add(Company company) {
         companies.add(company);
+    }
+
+    public void resetCompanies() {
+        companies = CompanyFactory.getCompanies();
     }
 }
