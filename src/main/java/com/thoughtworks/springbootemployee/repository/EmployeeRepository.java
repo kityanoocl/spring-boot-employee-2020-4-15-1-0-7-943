@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.model.EmployeeFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -21,5 +22,11 @@ public class EmployeeRepository {
 
     public void add(Employee employee) {
         employees.add(employee);
+    }
+
+    public void updateEmployee(Employee employee) {
+        employees.remove(employee);
+        employees.add(employee);
+        employees.sort(Comparator.comparingInt(Employee::getId));
     }
 }

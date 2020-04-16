@@ -31,4 +31,16 @@ public class EmployeeService {
 
         return employeeRepository.getEmployees();
     }
+
+    public List<Employee> updateEmployeeInfo(Integer employeeId, Employee newEmployeeInfo) {
+        Employee employee = getEmployeesById(employeeId);
+        if (employee != null) {
+            employee.setId(newEmployeeInfo.getId());
+            employee.setName(newEmployeeInfo.getName());
+            employee.setAge(newEmployeeInfo.getAge());
+            employee.setGender(newEmployeeInfo.getGender());
+            employeeRepository.updateEmployee(employee);
+        }
+        return employeeRepository.getEmployees();
+    }
 }

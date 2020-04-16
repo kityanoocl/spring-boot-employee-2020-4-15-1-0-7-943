@@ -53,18 +53,8 @@ public class EmployeeController {
 
     @PutMapping("/{employeeId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> updateCompanyBasicInfo(@PathVariable Integer employeeId, @RequestBody Employee newEmployeeInfo) {
-        Employee employee = employees.stream().filter(companyInList -> companyInList.getId() == employeeId).findFirst().orElse(null);
-        if (employee == null) {
-            return null;
-        }
-
-        employee.setId(newEmployeeInfo.getId());
-        employee.setName(newEmployeeInfo.getName());
-        employee.setAge(newEmployeeInfo.getAge());
-        employee.setGender(newEmployeeInfo.getGender());
-
-        return employees;
+    public List<Employee> updateEmployeeInfo(@PathVariable Integer employeeId, @RequestBody Employee newEmployeeInfo) {
+        return employeeService.updateEmployeeInfo(employeeId, newEmployeeInfo);
     }
 
     @DeleteMapping("/{employeeId}")
