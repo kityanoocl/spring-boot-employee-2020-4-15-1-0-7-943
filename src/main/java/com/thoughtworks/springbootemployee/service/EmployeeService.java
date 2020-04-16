@@ -2,6 +2,8 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +14,8 @@ import static java.lang.Integer.min;
 
 @Service
 public class EmployeeService {
-    private EmployeeRepository employeeRepository = new EmployeeRepository();
+    @Autowired
+    EmployeeRepository employeeRepository;
 
     public EmployeeService() {
     }

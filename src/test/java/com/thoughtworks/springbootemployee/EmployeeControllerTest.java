@@ -2,6 +2,8 @@ package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.controller.EmployeeController;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.TypeRef;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -15,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.spec.internal.HttpStatus;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.event.annotation.BeforeTestExecution;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -26,11 +29,20 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ComponentScan("com.thoughtworks.springbootemployee.service")
+@ComponentScan("com.thoughtworks.springbootemployee.repository")
 public class EmployeeControllerTest {
+    @Autowired
+    EmployeeRepository employeeRepository;
+    @Autowired
+    EmployeeController employeeController;
+    @Autowired
+    EmployeeService employeeService;
 
     @Before
     public void initialization() throws Exception {
-        RestAssuredMockMvc.standaloneSetup(new EmployeeController());
+        RestAssuredMockMvc.standaloneSetup(employeeController);
+        employeeRepository.resetEmployees();
     }
 
     @Test
