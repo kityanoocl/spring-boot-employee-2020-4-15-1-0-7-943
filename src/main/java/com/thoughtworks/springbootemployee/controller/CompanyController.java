@@ -28,6 +28,7 @@ public class CompanyController {
     public List<Company> getCompaniesInPage(@RequestParam Integer page, @RequestParam Integer pageSize) {
         int companySize = companies.size();
         int startIndex = min(companySize, (page - 1) * pageSize);
+        startIndex = max(0, startIndex);
         int endIndex = max(1, page * pageSize);
         endIndex = min(endIndex, companySize);
         return companies.subList(startIndex, endIndex);

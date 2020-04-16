@@ -33,6 +33,7 @@ public class EmployeeController {
     public List<Employee> getEmployeesInPage(@RequestParam Integer page, @RequestParam Integer pageSize) {
         int employeeSize = employees.size();
         int startIndex = min(employeeSize, (page - 1) * pageSize);
+        startIndex = max(0, startIndex);
         int endIndex = max(1, page * pageSize);
         endIndex = min(endIndex, employeeSize);
         return employees.subList(startIndex, endIndex);
