@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Integer.max;
@@ -56,6 +57,15 @@ public class CompanyService {
             company.setName(newCompanyInfo.getName());
             company.setEmployeesNumber(newCompanyInfo.getEmployeesNumber());
             company.setEmployees(newCompanyInfo.getEmployees());
+        }
+
+        return getCompanies();
+    }
+
+    public List<Company> deleteCompanyEmployees(String companyName) {
+        Company company = getCompanyByCompanyName(companyName);
+        if (company != null) {
+            company.setEmployees(new ArrayList<Employee>());
         }
 
         return getCompanies();

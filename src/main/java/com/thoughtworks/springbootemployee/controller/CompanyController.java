@@ -59,8 +59,6 @@ public class CompanyController {
     @DeleteMapping("/{companyName}")
     @ResponseStatus(HttpStatus.OK)
     public List<Company> deleteCompanyEmployees (@PathVariable String companyName) {
-        companies = companies.stream().filter(companyInList -> !companyInList.getName().equals(companyName)).collect(Collectors.toList());
-
-        return companies;
+        return companyService.deleteCompanyEmployees(companyName);
     }
 }

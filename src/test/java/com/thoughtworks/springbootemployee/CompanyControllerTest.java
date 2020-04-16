@@ -150,9 +150,10 @@ public class CompanyControllerTest {
                 return super.getType();
             }
         });
-        Assert.assertEquals(1, companies.size());
-        Assert.assertEquals("def", companies.get(0).getName());
-        Assert.assertEquals(30, companies.get(0).getEmployeesNumber());
+        Assert.assertEquals(2, companies.size());
+        Assert.assertEquals("abc", companies.get(0).getName());
+        Assert.assertEquals(10, companies.get(0).getEmployeesNumber());
+        Assert.assertEquals(0, companies.get(0).getEmployees().size());
     }
 
     @Test
