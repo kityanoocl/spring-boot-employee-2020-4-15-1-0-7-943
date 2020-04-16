@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.model.EmployeeFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import static java.lang.Integer.min;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-    private List<Employee> employees = new ArrayList<>();
+    private List<Employee> employees = EmployeeFactory.getEmployees();
 
     @GetMapping
     public List<Employee> getAllEmployee() {
@@ -23,13 +24,13 @@ public class EmployeeController {
     }
 
     @GetMapping(params = "gender")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public List<Employee> getEmployeesInSameGender(@RequestParam String gender) {
         return employees.stream().filter(employee -> employee.getGender().toLowerCase().equals(gender)).collect(Collectors.toList());
     }
 
-    @GetMapping(params = "page")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @GetMapping(params = {"page", "pageSize"})
+    @ResponseStatus(HttpStatus.OK)
     public List<Employee> getEmployeesInPage(@RequestParam Integer page, @RequestParam Integer pageSize) {
         int employeeSize = employees.size();
         int startIndex = min(employeeSize, (page - 1) * pageSize);
@@ -40,25 +41,25 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public Employee getEmployee(@PathVariable Integer employeeId) {
         return employees.stream().filter(employee -> employee.getId() == employeeId).findFirst().orElse(null);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Employee addEmployee(@RequestBody Employee employee) {
+    @ResponseStatus(HttpStatus.OK)
+    public List<Employee> addEmployee(@RequestBody Employee employee) {
         if (employees.stream().anyMatch(employeeInList -> employeeInList.getId() == employee.getId())) {
             return null;
         }
 
         employees.add(employee);
-        return employee;
+        return employees;
     }
 
     @PutMapping("/{employeeId}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public Employee updateCompanyBasicInfo(@PathVariable Integer employeeId, @RequestBody Employee newEmployeeInfo) {
+    @ResponseStatus(HttpStatus.OK)
+    public List<Employee> updateCompanyBasicInfo(@PathVariable Integer employeeId, @RequestBody Employee newEmployeeInfo) {
         Employee employee = employees.stream().filter(companyInList -> companyInList.getId() == employeeId).findFirst().orElse(null);
         if (employee == null) {
             return null;
@@ -69,11 +70,11 @@ public class EmployeeController {
         employee.setAge(newEmployeeInfo.getAge());
         employee.setGender(newEmployeeInfo.getGender());
 
-        return employee;
+        return employees;
     }
 
     @DeleteMapping("/{employeeId}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public List<Employee> deleteCompanyEmployees(@PathVariable Integer employeeId) {
         employees = employees.stream().filter(companyInList -> companyInList.getId() != employeeId).collect(Collectors.toList());
         return employees;
