@@ -16,7 +16,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private int age;
+    private Integer age;
     private String gender;
     private Integer companyId;
     @OneToOne
@@ -24,8 +24,9 @@ public class Employee {
     private ParkingBoy parkingBoy;
 
     public void update(Employee newEmployeeInfo) {
-        this.name = newEmployeeInfo.getName();
-        this.age = newEmployeeInfo.getAge();
-        this.gender = newEmployeeInfo.getGender();
+        this.setName(newEmployeeInfo.getName() == null? this.getName() : newEmployeeInfo.getName());
+        this.setAge(newEmployeeInfo.getAge() == null? this.getAge() : newEmployeeInfo.getAge());
+        this.setGender(newEmployeeInfo.getGender() == null? this.getGender() : newEmployeeInfo.getGender());
+        this.setCompanyId(newEmployeeInfo.getCompanyId() == null? this.getCompanyId() : newEmployeeInfo.getCompanyId());
     }
 }

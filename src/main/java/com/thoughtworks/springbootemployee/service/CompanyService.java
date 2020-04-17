@@ -4,6 +4,8 @@ import com.thoughtworks.springbootemployee.commonUtil.CommonUtil;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,14 +49,14 @@ public class CompanyService {
         return getCompanies();
     }
 
-    public List<Company> updateCompanyBasicInfo(String companyName, Company newCompanyInfo) {
+    public Company updateCompanyBasicInfo(String companyName, Company newCompanyInfo) {
         Company company = getCompanyByCompanyName(companyName);
         if (company != null) {
             company.update(newCompanyInfo);
-            companyRepository.save(company);
+            return companyRepository.save(company);
         }
 
-        return getCompanies();
+        return null;
     }
 
     public List<Company> deleteCompanyEmployees(String companyName) {

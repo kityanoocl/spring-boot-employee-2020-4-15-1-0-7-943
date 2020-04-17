@@ -72,11 +72,11 @@ public class EmployeeControllerTest {
         Assert.assertEquals(2, employees.size());
         Assert.assertEquals(1, employees.get(0).getId().intValue());
         Assert.assertEquals("Test 1", employees.get(0).getName());
-        Assert.assertEquals(20, employees.get(0).getAge());
+        Assert.assertEquals(20, employees.get(0).getAge().intValue());
         Assert.assertEquals("Male", employees.get(0).getGender());
         Assert.assertEquals(2, employees.get(1).getId().intValue());
         Assert.assertEquals("Test 2", employees.get(1).getName());
-        Assert.assertEquals(18, employees.get(1).getAge());
+        Assert.assertEquals(18, employees.get(1).getAge().intValue());
         Assert.assertEquals("Female", employees.get(1).getGender());
     }
 
@@ -159,7 +159,7 @@ public class EmployeeControllerTest {
         });
         Assert.assertEquals(1, employees.get(0).getId().intValue());
         Assert.assertEquals("Update", employees.get(0).getName());
-        Assert.assertEquals(20, employees.get(0).getAge());
+        Assert.assertEquals(20, employees.get(0).getAge().intValue());
         Assert.assertEquals("Male", employees.get(0).getGender());
     }
 
@@ -182,7 +182,7 @@ public class EmployeeControllerTest {
         Assert.assertEquals(1, employees.size());
         Assert.assertEquals(2, employees.get(0).getId().intValue());
         Assert.assertEquals("Test 2", employees.get(0).getName());
-        Assert.assertEquals(18, employees.get(0).getAge());
+        Assert.assertEquals(18, employees.get(0).getAge().intValue());
         Assert.assertEquals("Female", employees.get(0).getGender());
     }
 
@@ -206,7 +206,7 @@ public class EmployeeControllerTest {
         Assert.assertEquals(1, employees.size());
         Assert.assertEquals(2, employees.get(0).getId().intValue());
         Assert.assertEquals("Test 2", employees.get(0).getName());
-        Assert.assertEquals(18, employees.get(0).getAge());
+        Assert.assertEquals(18, employees.get(0).getAge().intValue());
         Assert.assertEquals("Female", employees.get(0).getGender());
     }
 }

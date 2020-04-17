@@ -57,7 +57,7 @@ public class CompanyController {
 
     @PutMapping("/{companyName}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Company> updateCompanyBasicInfo(@PathVariable String companyName, @RequestBody Company newCompanyInfo) {
+    public Company updateCompanyBasicInfo(@PathVariable String companyName, @RequestBody Company newCompanyInfo) {
         return companyService.updateCompanyBasicInfo(companyName, newCompanyInfo);
     }
 

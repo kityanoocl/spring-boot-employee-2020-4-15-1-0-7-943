@@ -64,10 +64,10 @@ public class CompanyControllerTest {
 
         Assert.assertEquals(2, companies.size());
         Assert.assertEquals("abc", companies.get(0).getName());
-        Assert.assertEquals(10, companies.get(0).getEmployeesNumber());
+        Assert.assertEquals(10, companies.get(0).getEmployeesNumber().intValue());
         Assert.assertEquals(2, companies.get(0).getEmployees().size());
         Assert.assertEquals("def", companies.get(1).getName());
-        Assert.assertEquals(30, companies.get(1).getEmployeesNumber());
+        Assert.assertEquals(30, companies.get(1).getEmployeesNumber().intValue());
         Assert.assertEquals(1, companies.get(1).getEmployees().size());
     }
 
@@ -86,7 +86,7 @@ public class CompanyControllerTest {
 
         Company companyFromResponse = response.getBody().as(Company.class);
         Assert.assertEquals("abc", companyFromResponse.getName());
-        Assert.assertEquals(10, companyFromResponse.getEmployeesNumber());
+        Assert.assertEquals(10, companyFromResponse.getEmployeesNumber().intValue());
     }
 
     @Test
@@ -153,15 +153,10 @@ public class CompanyControllerTest {
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        List<Company> companies = response.getBody().as(new TypeRef<List<Company>>() {
-            @Override
-            public Type getType() {
-                return super.getType();
-            }
-        });
-        Assert.assertEquals("abc", companies.get(0).getName());
-        Assert.assertEquals(20, companies.get(0).getEmployeesNumber());
-        Assert.assertEquals("Update", companies.get(0).getEmployees().get(0).getName());
+        Company companyFromResponse = response.getBody().as(Company.class);
+        Assert.assertEquals("abc", companyFromResponse.getName());
+        Assert.assertEquals(20, companyFromResponse.getEmployeesNumber().intValue());
+        Assert.assertEquals("Update", companyFromResponse.getEmployees().get(0).getName());
     }
 
     @Test
@@ -182,7 +177,7 @@ public class CompanyControllerTest {
         });
         Assert.assertEquals(2, companiesFromResponse.size());
         Assert.assertEquals("abc", companiesFromResponse.get(0).getName());
-        Assert.assertEquals(10, companiesFromResponse.get(0).getEmployeesNumber());
+        Assert.assertEquals(10, companiesFromResponse.get(0).getEmployeesNumber().intValue());
         Assert.assertEquals(0, companiesFromResponse.get(0).getEmployees().size());
     }
 
@@ -205,6 +200,6 @@ public class CompanyControllerTest {
         });
         Assert.assertEquals(1, companies.size());
         Assert.assertEquals("def", companies.get(0).getName());
-        Assert.assertEquals(30, companies.get(0).getEmployeesNumber());
+        Assert.assertEquals(30, companies.get(0).getEmployeesNumber().intValue());
     }
 }
