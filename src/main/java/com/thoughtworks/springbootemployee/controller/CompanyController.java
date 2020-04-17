@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @RestController
@@ -31,16 +32,16 @@ public class CompanyController {
         return companyService.getCompaniesInPage(page, pageSize);
     }
 
-    @GetMapping("/{companyName}")
+    @GetMapping("/{companyId}")
     @ResponseStatus(HttpStatus.OK)
-    public Company getCompanyByCompanyName(@PathVariable String companyName) {
-        return companyService.getCompanyByCompanyName(companyName);
+    public Company getCompanyByCompanyId(@PathVariable Integer companyId) {
+        return companyService.getCompanyByCompanyId(companyId);
     }
 
-    @GetMapping("/{companyName}/employees")
+    @GetMapping("/{companyId}/employees")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getCompanyEmployees(@PathVariable String companyName) {
-        return companyService.getCompanyEmployees(companyName);
+    public List<Employee> getCompanyEmployees(@PathVariable Integer companyId) {
+        return companyService.getCompanyEmployees(companyId);
     }
 
     @PostMapping
@@ -49,15 +50,16 @@ public class CompanyController {
         return companyService.addCompany(company);
     }
 
-    @PutMapping("/{companyName}")
+
+    @PutMapping("/{companyId}")
     @ResponseStatus(HttpStatus.OK)
-    public Company updateCompanyBasicInfo(@PathVariable String companyName, @RequestBody Company newCompanyInfo) {
-        return companyService.updateCompanyBasicInfo(companyName, newCompanyInfo);
+    public Company updateCompanyBasicInfo(@PathVariable Integer companyId, @RequestBody Company newCompanyInfo) {
+        return companyService.updateCompanyBasicInfo(companyId, newCompanyInfo);
     }
 
-    @DeleteMapping("/{companyName}")
+    @DeleteMapping("/{companyId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Company> deleteCompanyEmployees(@PathVariable String companyName) {
-        return companyService.deleteCompanyEmployees(companyName);
+    public List<Company> deleteCompany(@PathVariable Integer companyId) {
+        return companyService.deleteCompany(companyId);
     }
 }

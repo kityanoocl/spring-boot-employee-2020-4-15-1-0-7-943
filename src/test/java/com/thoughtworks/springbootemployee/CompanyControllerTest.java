@@ -1,10 +1,11 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.controller.CompanyController;
-import com.thoughtworks.springbootemployee.controller.EmployeeController;
-import com.thoughtworks.springbootemployee.model.*;
+import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.CompanyFactory;
+import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.model.ParkingBoy;
 import com.thoughtworks.springbootemployee.service.CompanyService;
-import com.thoughtworks.springbootemployee.service.EmployeeService;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.TypeRef;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -72,15 +73,15 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void shouldFindCompanyByName() {
+    public void shouldFindCompanyByCompanyId() {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(1, "Test 1", 18, "Male", 1, new ParkingBoy()));
         employees.add(new Employee(2, "Test 2", 19, "Female", 1, new ParkingBoy()));
         Company company = new Company(1, "abc", 10, employees);
-        doReturn(company).when(companyService).getCompanyByCompanyName(any());
+        doReturn(company).when(companyService).getCompanyByCompanyId(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
-                .get("/companies/abc");
+                .get("/companies/1");
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
@@ -97,7 +98,7 @@ public class CompanyControllerTest {
         doReturn(employees).when(companyService).getCompanyEmployees(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
-                .get("/companies/abc/employees");
+                .get("/companies/1/employees");
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
@@ -149,7 +150,7 @@ public class CompanyControllerTest {
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(company)
                 .when()
-                .put("/companies/abc");
+                .put("/companies/1");
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
@@ -160,12 +161,12 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void shouldDeleteCompanyEmployees() {
-        companies.get(0).setEmployees(new ArrayList<>());
-        doReturn(companies).when(companyService).deleteCompanyEmployees(any());
+    public void shouldDeleteCompany() {
+        companies.remove(0);
+        doReturn(companies).when(companyService).deleteCompany(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
-                .delete("/companies/abc");
+                .delete("/companies/1");
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
@@ -175,10 +176,10 @@ public class CompanyControllerTest {
                 return super.getType();
             }
         });
-        Assert.assertEquals(2, companiesFromResponse.size());
-        Assert.assertEquals("abc", companiesFromResponse.get(0).getName());
-        Assert.assertEquals(10, companiesFromResponse.get(0).getEmployeesNumber().intValue());
-        Assert.assertEquals(0, companiesFromResponse.get(0).getEmployees().size());
+        Assert.assertEquals(1, companiesFromResponse.size());
+        Assert.assertEquals("def", companiesFromResponse.get(0).getName());
+        Assert.assertEquals(30, companiesFromResponse.get(0).getEmployeesNumber().intValue());
+        Assert.assertEquals(1, companiesFromResponse.get(0).getEmployees().size());
     }
 
     @Test
