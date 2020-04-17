@@ -46,4 +46,11 @@ public class Employee {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    public void update(Employee newEmployeeInfo) {
+        this.id = newEmployeeInfo.getId();
+        this.name = newEmployeeInfo.getName();
+        this.age = newEmployeeInfo.getAge();
+        this.gender = newEmployeeInfo.getGender();
+    }
 }

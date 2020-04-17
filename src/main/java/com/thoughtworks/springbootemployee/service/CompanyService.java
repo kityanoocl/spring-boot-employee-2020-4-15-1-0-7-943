@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.commonUtil.CommonUtil;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -24,12 +25,7 @@ public class CompanyService {
 
     public List<Company> getCompaniesInPage(Integer page, Integer pageSize) {
         List<Company> companies = getCompanies();
-        int companySize = companies.size();
-        int startIndex = min(companySize, (page - 1) * pageSize);
-        startIndex = max(0, startIndex);
-        int endIndex = max(1, page * pageSize);
-        endIndex = min(endIndex, companySize);
-        return companies.subList(startIndex, endIndex);
+        return CommonUtil.returnListInPage(companies, page, pageSize);
     }
 
     public Company getCompanyByCompanyName(String companyName) {
