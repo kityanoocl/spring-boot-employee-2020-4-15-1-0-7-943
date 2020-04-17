@@ -10,22 +10,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Employee")
-public class Employee {
+@Table(name = "Parking_Boy")
+public class ParkingBoy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private int age;
     private String gender;
-    private Integer companyId;
-    @OneToOne
-    @JoinColumn(name = "id")
-    private ParkingBoy parkingBoy;
-
-    public void update(Employee newEmployeeInfo) {
-        this.name = newEmployeeInfo.getName();
-        this.age = newEmployeeInfo.getAge();
-        this.gender = newEmployeeInfo.getGender();
-    }
 }

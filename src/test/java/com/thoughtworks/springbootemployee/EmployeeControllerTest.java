@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee;
 import com.thoughtworks.springbootemployee.controller.EmployeeController;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.model.EmployeeFactory;
+import com.thoughtworks.springbootemployee.model.ParkingBoy;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import io.restassured.http.ContentType;
@@ -81,7 +82,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldFindEmployeeById() {
-        Employee employee = new Employee(1, "Test 1", 20, "Male", 1);
+        Employee employee = new Employee(1, "Test 1", 20, "Male", 1, new ParkingBoy());
         doReturn(employee).when(employeeService).getEmployeeById(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
@@ -117,7 +118,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldAddEmployee() {
-        employees.add(new Employee(3, "XX", 20, "Male", 1));
+        employees.add(new Employee(3, "XX", 20, "Male", 1, new ParkingBoy()));
         doReturn(employees).when(employeeService).addEmployee(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(employee)
