@@ -2,24 +2,13 @@ package com.thoughtworks.springbootemployee.repository;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.CompanyFactory;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CompanyRepository {
-    private List<Company> companies = CompanyFactory.getCompanies();
-
-    public List<Company> getCompanies() {
-        return companies;
-    }
-
-    public void add(Company company) {
-        companies.add(company);
-    }
-
-    public void resetCompanies() {
-        companies = CompanyFactory.getCompanies();
-    }
+public interface CompanyRepository extends JpaRepository<Company, Integer> {
+    Company findByName(String companyName);
 }

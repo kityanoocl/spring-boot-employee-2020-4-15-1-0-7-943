@@ -79,7 +79,7 @@ public class CompanyControllerTest {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(1, "Test 1", 18, "Male"));
         employees.add(new Employee(2, "Test 2", 19, "Female"));
-        Company company = new Company("abc", 10, employees);
+        Company company = new Company(1, "abc", 10, employees);
         doReturn(company).when(companyService).getCompanyByCompanyName(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
@@ -119,7 +119,7 @@ public class CompanyControllerTest {
     public void shouldAddCompany() {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(3, "XX", 84, "Male"));
-        Company company = new Company("ghi", 40, employees);
+        Company company = new Company(3, "ghi", 40, employees);
         companies.add(company);
         doReturn(companies).when(companyService).addCompany(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
@@ -144,7 +144,7 @@ public class CompanyControllerTest {
     public void shouldUpdateCompany() {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(1, "Update", 20, "Male"));
-        Company company = new Company("abc", 20, employees);
+        Company company = new Company(1, "abc", 20, employees);
         companies.get(0).setName("abc");
         companies.get(0).setEmployees(employees);
         companies.get(0).setEmployeesNumber(20);

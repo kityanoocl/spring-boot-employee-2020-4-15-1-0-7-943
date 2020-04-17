@@ -5,6 +5,8 @@ import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,16 +22,15 @@ public class CompanyService {
 
 
     public List<Company> getCompanies() {
-        return companyRepository.getCompanies();
+        return companyRepository.findAll();
     }
 
     public List<Company> getCompaniesInPage(Integer page, Integer pageSize) {
-        List<Company> companies = getCompanies();
-        return CommonUtil.returnListInPage(companies, page, pageSize);
+        return companyRepository.findAll(PageRequest.of(page, pageSize)).getContent();
     }
 
     public Company getCompanyByCompanyName(String companyName) {
-        return getCompanies().stream().filter(company -> company.getName().equals(companyName)).findFirst().orElse(null);
+        return companyRepository.findByName(companyName);
     }
 
     public List<Employee> getCompanyEmployees(String companyName) {
@@ -42,10 +43,7 @@ public class CompanyService {
     }
 
     public List<Company> addCompany(Company company) {
-        if (getCompanyByCompanyName(company.getName()) == null) {
-            companyRepository.add(company);
-        }
-
+        companyRepository.save(company);
         return getCompanies();
     }
 
@@ -53,6 +51,7 @@ public class CompanyService {
         Company company = getCompanyByCompanyName(companyName);
         if (company != null) {
             company.update(newCompanyInfo);
+            companyRepository.save(company);
         }
 
         return getCompanies();
@@ -62,6 +61,7 @@ public class CompanyService {
         Company company = getCompanyByCompanyName(companyName);
         if (company != null) {
             company.setEmployees(new ArrayList<Employee>());
+            companyRepository.save(company);
         }
 
         return getCompanies();
