@@ -18,4 +18,5 @@ public class ParkingBoy {
     private String name;
     private int age;
     private String gender;
+    private Integer employeeId;
 }
