@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,7 @@ public class ParkingBoy {
     private String name;
     private int age;
     private String gender;
-    private Integer employeeId;
+    @JsonIgnore
+    @OneToOne(mappedBy = "parkingBoy")
+    private Employee employee;
 }

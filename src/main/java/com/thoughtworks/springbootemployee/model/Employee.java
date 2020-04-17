@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,9 @@ public class Employee {
     private Integer age;
     private String gender;
     private Integer companyId;
+    private Integer parkingBoyId;
     @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "employeeId")
+    @JoinColumn (name = "parkingBoyId", insertable = false, updatable = false)
     private ParkingBoy parkingBoy;
 
     public void update(Employee newEmployeeInfo) {
