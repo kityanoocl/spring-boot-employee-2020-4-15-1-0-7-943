@@ -3,7 +3,6 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,12 +27,12 @@ public class EmployeeService {
         return employeeRepository.getEmployees().stream().filter(employee -> employee.getGender().toLowerCase().equals(gender)).collect(Collectors.toList());
     }
 
-    public Employee getEmployeesById(Integer employeeId) {
+    public Employee getEmployeeById(Integer employeeId) {
         return employeeRepository.getEmployees().stream().filter(employee -> employee.getId() == employeeId).findFirst().orElse(null);
     }
 
     public List<Employee> addEmployee(Employee employee) {
-        if (getEmployeesById(employee.getId()) == null) {
+        if (getEmployeeById(employee.getId()) == null) {
             employeeRepository.add(employee);
         }
 
@@ -41,7 +40,7 @@ public class EmployeeService {
     }
 
     public List<Employee> updateEmployeeInfo(Integer employeeId, Employee newEmployeeInfo) {
-        Employee employee = getEmployeesById(employeeId);
+        Employee employee = getEmployeeById(employeeId);
         if (employee != null) {
             employee.setId(newEmployeeInfo.getId());
             employee.setName(newEmployeeInfo.getName());
@@ -53,7 +52,7 @@ public class EmployeeService {
     }
 
     public List<Employee> deleteEmployee(Integer employeeId) {
-        Employee employee = getEmployeesById(employeeId);
+        Employee employee = getEmployeeById(employeeId);
         employeeRepository.deleteEmployee(employee);
         return employeeRepository.getEmployees();
     }

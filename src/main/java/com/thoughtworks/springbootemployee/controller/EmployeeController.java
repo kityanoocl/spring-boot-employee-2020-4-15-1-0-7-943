@@ -1,17 +1,12 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.model.EmployeeFactory;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.lang.Integer.max;
-import static java.lang.Integer.min;
 
 @RestController
 @RequestMapping("/employees")
@@ -39,7 +34,7 @@ public class EmployeeController {
     @GetMapping("/{employeeId}")
     @ResponseStatus(HttpStatus.OK)
     public Employee getEmployee(@PathVariable Integer employeeId) {
-        return employeeService.getEmployeesById(employeeId);
+        return employeeService.getEmployeeById(employeeId);
     }
 
     @PostMapping
