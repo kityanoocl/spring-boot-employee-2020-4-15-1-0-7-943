@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.commonUtil.CommonUtil;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,42 +19,37 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployees() {
-        return employeeRepository.getEmployees();
+        return employeeRepository.findAll();
     }
 
     public List<Employee> getEmployeesByGender(String gender) {
-        return employeeRepository.getEmployees().stream().filter(employee -> employee.getGender().toLowerCase().equals(gender)).collect(Collectors.toList());
+        return employeeRepository.findAllByGender(gender);
     }
 
     public Employee getEmployeeById(Integer employeeId) {
-        return employeeRepository.getEmployees().stream().filter(employee -> employee.getId() == employeeId).findFirst().orElse(null);
+        return employeeRepository.getOne(employeeId);
     }
 
     public List<Employee> addEmployee(Employee employee) {
-        if (getEmployeeById(employee.getId()) == null) {
-            employeeRepository.add(employee);
-        }
-
-        return employeeRepository.getEmployees();
+        employeeRepository.save(employee);
+        return getEmployees();
     }
 
     public List<Employee> updateEmployeeInfo(Integer employeeId, Employee newEmployeeInfo) {
         Employee employee = getEmployeeById(employeeId);
         if (employee != null) {
             employee.update(newEmployeeInfo);
+            employeeRepository.save(employee);
         }
-
-        return employeeRepository.getEmployees();
+        return getEmployees();
     }
 
     public List<Employee> deleteEmployee(Integer employeeId) {
-        Employee employee = getEmployeeById(employeeId);
-        employeeRepository.deleteEmployee(employee);
-        return employeeRepository.getEmployees();
+        employeeRepository.findById(employeeId).ifPresent(employee -> employeeRepository.delete(employee));
+        return getEmployees();
     }
 
     public List<Employee> getEmployeesInPage(Integer page, Integer pageSize) {
-        List<Employee> employees = getEmployees();
-        return CommonUtil.returnListInPage(employees, page, pageSize);
+        return employeeRepository.findAll(PageRequest.of(page, pageSize)).getContent();
     }
 }

@@ -42,7 +42,6 @@ public class EmployeeControllerTest {
     @Before
     public void initialization() throws Exception {
         RestAssuredMockMvc.standaloneSetup(employeeController);
-        employeeRepository.resetEmployees();
     }
 
     @Test
@@ -60,11 +59,11 @@ public class EmployeeControllerTest {
             }
         });
         Assert.assertEquals(2, employees.size());
-        Assert.assertEquals(1, employees.get(0).getId());
+        Assert.assertEquals(1, employees.get(0).getId().intValue());
         Assert.assertEquals("Test 1", employees.get(0).getName());
         Assert.assertEquals(20, employees.get(0).getAge());
         Assert.assertEquals("Male", employees.get(0).getGender());
-        Assert.assertEquals(2, employees.get(1).getId());
+        Assert.assertEquals(2, employees.get(1).getId().intValue());
         Assert.assertEquals("Test 2", employees.get(1).getName());
         Assert.assertEquals(18, employees.get(1).getAge());
         Assert.assertEquals("Female", employees.get(1).getGender());
@@ -79,7 +78,7 @@ public class EmployeeControllerTest {
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
         Employee employee = response.getBody().as(Employee.class);
-        Assert.assertEquals(1, employee.getId());
+        Assert.assertEquals(1, employee.getId().intValue());
         Assert.assertEquals("Test 1", employee.getName());
     }
 
@@ -104,7 +103,10 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldAddEmployee() {
-        Employee employee = new Employee(3, "XX", 84, "Male");
+        Employee employee = new Employee();
+        employee.setName("XX");
+        employee.setAge(20);
+        employee.setGender("Male");
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(employee)
                 .when()
@@ -125,7 +127,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldUpdateEmployee() {
-        Employee employee = new Employee(1, "Update", 20, "Male");
+        Employee employee = new Employee();
+        employee.setName("Update");
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(employee)
                 .when()
@@ -139,7 +142,7 @@ public class EmployeeControllerTest {
                 return super.getType();
             }
         });
-        Assert.assertEquals(1, employees.get(0).getId());
+        Assert.assertEquals(1, employees.get(0).getId().intValue());
         Assert.assertEquals("Update", employees.get(0).getName());
         Assert.assertEquals(20, employees.get(0).getAge());
         Assert.assertEquals("Male", employees.get(0).getGender());
@@ -160,7 +163,7 @@ public class EmployeeControllerTest {
             }
         });
         Assert.assertEquals(1, employees.size());
-        Assert.assertEquals(2, employees.get(0).getId());
+        Assert.assertEquals(2, employees.get(0).getId().intValue());
         Assert.assertEquals("Test 2", employees.get(0).getName());
         Assert.assertEquals(18, employees.get(0).getAge());
         Assert.assertEquals("Female", employees.get(0).getGender());
@@ -182,7 +185,7 @@ public class EmployeeControllerTest {
             }
         });
         Assert.assertEquals(1, employees.size());
-        Assert.assertEquals(2, employees.get(0).getId());
+        Assert.assertEquals(2, employees.get(0).getId().intValue());
         Assert.assertEquals("Test 2", employees.get(0).getName());
         Assert.assertEquals(18, employees.get(0).getAge());
         Assert.assertEquals("Female", employees.get(0).getGender());
