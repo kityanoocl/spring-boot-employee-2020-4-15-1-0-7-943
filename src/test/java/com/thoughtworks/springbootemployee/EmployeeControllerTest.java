@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.controller.EmployeeController;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.model.EmployeeFactory;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import io.restassured.http.ContentType;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.spec.internal.HttpStatus;
@@ -23,29 +25,37 @@ import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ComponentScan("com.thoughtworks.springbootemployee.service")
 @ComponentScan("com.thoughtworks.springbootemployee.repository")
 public class EmployeeControllerTest {
-    @Autowired
-    EmployeeRepository employeeRepository;
-    @Autowired
-    EmployeeController employeeController;
-    @Autowired
-    EmployeeService employeeService;
+    public List<Employee> employees = new ArrayList<>();
+    public Employee employee = new Employee();
+
+    @Mock
+    private EmployeeService employeeService;
 
     @Before
-    public void initialization() throws Exception {
+    public void setUp(){
+        EmployeeController employeeController = new EmployeeController(employeeService);
         RestAssuredMockMvc.standaloneSetup(employeeController);
+
+        employees = EmployeeFactory.getEmployees();
     }
+
 
     @Test
     public void shouldGetAllEmployees() {
+        doReturn(employees).when(employeeService).getEmployees();
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
                 .get("/employees");
@@ -71,19 +81,23 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldFindEmployeeById() {
+        Employee employee = new Employee(1, "Test 1", 20, "Male");
+        doReturn(employee).when(employeeService).getEmployeeById(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
                 .get("/employees/1");
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        Employee employee = response.getBody().as(Employee.class);
-        Assert.assertEquals(1, employee.getId().intValue());
-        Assert.assertEquals("Test 1", employee.getName());
+        Employee employeeFromResponse = response.getBody().as(Employee.class);
+        Assert.assertEquals(1, employeeFromResponse.getId().intValue());
+        Assert.assertEquals("Test 1", employeeFromResponse.getName());
     }
 
     @Test
     public void shouldFindEmployeeByGender() {
+        employees = employees.stream().filter(employee -> employee.getGender().equals("Male")).collect(Collectors.toList());
+        doReturn(employees).when(employeeService).getEmployeesByGender(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .params("gender", "male")
                 .when()
@@ -103,10 +117,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldAddEmployee() {
-        Employee employee = new Employee();
-        employee.setName("XX");
-        employee.setAge(20);
-        employee.setGender("Male");
+        employees.add(new Employee(3, "XX", 20, "Male"));
+        doReturn(employees).when(employeeService).addEmployee(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(employee)
                 .when()
@@ -127,8 +139,10 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldUpdateEmployee() {
-        Employee employee = new Employee();
-        employee.setName("Update");
+        employees.get(0).setName("Update");
+        employees.get(0).setAge(20);
+        employees.get(0).setGender("Male");
+        doReturn(employees).when(employeeService).updateEmployeeInfo(any(), any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(employee)
                 .when()
@@ -150,6 +164,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldDeleteEmployee() {
+        employees.remove(0);
+        doReturn(employees).when(employeeService).deleteEmployee(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
                 .delete("/employees/1");
@@ -171,6 +187,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldDisplayEmployeeInPage() {
+        employees.remove(0);
+        doReturn(employees).when(employeeService).getEmployeesInPage(any(), any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .params("page", 2, "pageSize", 1)
                 .when()

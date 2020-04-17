@@ -14,6 +14,10 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
     @GetMapping
     public List<Employee> getAllEmployee() {
         return employeeService.getEmployees();
