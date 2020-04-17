@@ -8,10 +8,10 @@ public class CompanyFactory {
         List<Company> companies = new ArrayList<>();
         List<Employee> employees1 = new ArrayList<>();
         List<Employee> employees2 = new ArrayList<>();
-        employees1.add(new Employee(1, "Test 1", 18, "Male"));
-        employees1.add(new Employee(2, "Test 2", 19, "Female"));
+        employees1.add(new Employee(1, "Test 1", 18, "Male", 1));
+        employees1.add(new Employee(2, "Test 2", 19, "Female", 1));
         companies.add(new Company(1, "abc", 10, employees1));
-        employees2.add(new Employee(3, "Test 3", 20, "Male"));
+        employees2.add(new Employee(1, "Test 3", 20, "Male", 2));
         companies.add(new Company(2, "def", 30, employees2));
         return companies;
     }

@@ -77,8 +77,8 @@ public class CompanyControllerTest {
     @Test
     public void shouldFindCompanyByName() {
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1, "Test 1", 18, "Male"));
-        employees.add(new Employee(2, "Test 2", 19, "Female"));
+        employees.add(new Employee(1, "Test 1", 18, "Male", 1));
+        employees.add(new Employee(2, "Test 2", 19, "Female", 1));
         Company company = new Company(1, "abc", 10, employees);
         doReturn(company).when(companyService).getCompanyByCompanyName(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
@@ -95,8 +95,8 @@ public class CompanyControllerTest {
     @Test
     public void shouldFindCompanyByNameAndGetEmployees() {
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1, "Test 1", 18, "Male"));
-        employees.add(new Employee(2, "Test 2", 19, "Female"));
+        employees.add(new Employee(1, "Test 1", 18, "Male", 1));
+        employees.add(new Employee(2, "Test 2", 19, "Female", 1));
         doReturn(employees).when(companyService).getCompanyEmployees(any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
@@ -118,7 +118,7 @@ public class CompanyControllerTest {
     @Test
     public void shouldAddCompany() {
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(3, "XX", 84, "Male"));
+        employees.add(new Employee(3, "XX", 84, "Male", 3));
         Company company = new Company(3, "ghi", 40, employees);
         companies.add(company);
         doReturn(companies).when(companyService).addCompany(any());
@@ -143,7 +143,7 @@ public class CompanyControllerTest {
     @Test
     public void shouldUpdateCompany() {
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1, "Update", 20, "Male"));
+        employees.add(new Employee(1, "Update", 20, "Male", 1));
         Company company = new Company(1, "abc", 20, employees);
         companies.get(0).setName("abc");
         companies.get(0).setEmployees(employees);

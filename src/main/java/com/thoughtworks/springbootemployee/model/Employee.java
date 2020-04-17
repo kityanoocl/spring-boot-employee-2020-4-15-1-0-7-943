@@ -20,6 +20,7 @@ public class Employee {
     private String name;
     private int age;
     private String gender;
+    private Integer companyId;
 
     public void update(Employee newEmployeeInfo) {
         this.name = newEmployeeInfo.getName();
