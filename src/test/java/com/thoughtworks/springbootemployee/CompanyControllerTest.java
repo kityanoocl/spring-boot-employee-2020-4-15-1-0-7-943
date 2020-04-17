@@ -145,7 +145,7 @@ public class CompanyControllerTest {
         companies.get(0).setName("abc");
         companies.get(0).setEmployees(employees);
         companies.get(0).setEmployeesNumber(20);
-        doReturn(companies).when(companyService).updateCompanyBasicInfo(any(), any());
+        doReturn(company).when(companyService).updateCompanyBasicInfo(any(), any());
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(company)
                 .when()
