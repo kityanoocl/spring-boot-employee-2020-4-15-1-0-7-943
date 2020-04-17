@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class Company {
     private Integer id;
     private String name;
     private Integer employeesNumber;
-    @OneToMany(targetEntity = Employee.class, mappedBy = "companyId", fetch = FetchType.EAGER)
+    @OneToMany (targetEntity = Employee.class, mappedBy = "companyId", fetch = FetchType.EAGER)
     private List<Employee> employees = new ArrayList<>();
 
     public void update(Company newCompanyInfo) {

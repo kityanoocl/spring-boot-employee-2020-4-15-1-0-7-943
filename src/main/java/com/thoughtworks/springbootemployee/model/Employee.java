@@ -20,7 +20,7 @@ public class Employee {
     private String gender;
     private Integer companyId;
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(table = "parking_boy", name = "id")
     private ParkingBoy parkingBoy;
 
     public void update(Employee newEmployeeInfo) {

@@ -53,10 +53,10 @@ public class CompanyService {
         Company company = getCompanyByCompanyName(companyName);
         if (company != null) {
             company.update(newCompanyInfo);
-            return companyRepository.save(company);
+            companyRepository.saveAndFlush(company);
         }
 
-        return null;
+        return company;
     }
 
     public List<Company> deleteCompanyEmployees(String companyName) {
